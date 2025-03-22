@@ -3,27 +3,38 @@ from rest_framework.response import Response
 from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer, LikeSerializer
 from rest_framework.permissions import IsAuthenticated
+from django.http import HttpResponseServerError
+import logging
+
+
+# logger = logging.getLogger(__name__)
+
+# def my_view(request):
+#     try:
+#         logger.info('ERROR: This is an info message')
+#     except Exception as e:
+#         logger.error(f'ERROR: {str(e)}')
+#         return HttpResponseServerError("HTTP 500 Internal Server Error")
 
 
 class PostListView(generics.ListAPIView):
-    queryset = Post.objects.all().order_by('-created_at')  # En son postlar ilk sırada
+    queryset = Post.objects.all().order_by('-created_at')
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated]  # Sadece giriş yapmış kullanıcılar erişebilir
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Followed users' posts (Followed users' postlarını getirme)
         user = self.request.user
-        followed_users = user.profile.following.all()  # Kullanıcının takip ettiği kullanıcılar
+        followed_users = user.profile.following.all()
         return Post.objects.filter(user__in=followed_users).order_by('-created_at')
-
+    
 
 class PostCreateView(generics.CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated]  # Giriş yapmış kullanıcılar post oluşturabilir
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)  # Postu oluştururken, kullanıcıyı bağla
+        serializer.save(user=self.request.user)
 
 
 class PostDetailView(generics.RetrieveAPIView):
@@ -38,7 +49,6 @@ class PostDeleteView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_destroy(self, instance):
-        # Sadece post sahibinin silmesine izin ver
         if instance.user == self.request.user:
             instance.delete()
         else:

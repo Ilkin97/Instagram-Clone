@@ -1,7 +1,6 @@
 from celery import shared_task
 from .models import Story
 from django.utils import timezone
-from datetime import timedelta
 
 
 @shared_task

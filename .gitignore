@@ -1,0 +1,43 @@
+# Python bytecode dosyaları
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Django'da kullanılacak dosyalar
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Çevresel dosyalar
+*.env
+*.venv
+*.venv/
+venv/
+venv.bak/
+ENV/
+env/
+.env/
+
+# Django secret key dosyası
+secret_key.txt
+
+# PyCharm veya VS Code gibi IDE'lerin oluşturduğu dosyalar
+.vscode/
+.idea/
+
+# Docker dosyaları
+*.dockerfile
+docker-compose.override.yml
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Redis
+*.rdb
+*.pid

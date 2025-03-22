@@ -13,6 +13,7 @@ django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 celery = "*"
 redis = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

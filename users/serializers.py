@@ -2,10 +2,12 @@ from rest_framework import serializers
 from .models import CustomUser
 from rest_framework_simplejwt.tokens import RefreshToken
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'email', 'bio', 'profile_picture']
+
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,6 +18,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
+
 
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
